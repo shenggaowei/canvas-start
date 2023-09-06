@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas id="c1" width="600" height="400">
+      当前浏览器不支持 canvas 元素
+    </canvas>
+  </body>
+  <script>
+    // 获取画布
+    /** @type {HTMLCanvasElement} */
+    const c1 = document.getElementById("c1");
+
+    if (!c1.getContext) {
+      console.log("当前浏览器不支持 canvas 元素");
+    }
+
+    // 获取画笔。2d图像
+    const ctx = c1.getContext("2d");
+
+    // 绘制矩形,位置 x,位置 y,宽度，高度
+    ctx.fillRect(100, 200, 300, 300);
+  </script>
+</html>
