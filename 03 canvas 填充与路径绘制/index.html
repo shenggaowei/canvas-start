@@ -7,9 +7,7 @@
   </head>
   <body>
     <!-- canvas width 和 height 为像素点 -->
-    <canvas id="c1" width="600" height="400">
-      当前浏览器不支持 canvas 元素
-    </canvas>
+    <canvas id="c1" width="600" height="400"> 当前浏览器不支持 canvas 元素 </canvas>
   </body>
   <script>
     // 获取画布
@@ -23,7 +21,28 @@
     // 获取画笔。2d图像
     const ctx = c1.getContext("2d");
 
+    // 落笔
+    ctx.beginPath();
     // 绘制矩形,位置 x,位置 y,宽度，高度
-    ctx.fillRect(100, 200, 300, 300);
+    // ctx.fillRect(100, 200, 300, 300);
+    ctx.rect(100, 100, 200, 100);
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.rect(200, 150, 200, 100);
+    ctx.fill();
+
+    // 提笔
+    ctx.closePath();
+
+    let height = 0;
+    let t1 = setInterval(() => {
+      height++;
+      // clearRect 这个方法通过把像素设置为透明以达到擦除一个矩形区域的目的。
+      ctx.clearRect(0, 0, c1.clientWidth, height);
+      if (height > c1.clientHeight) {
+        clearInterval(t1);
+      }
+    }, 10);
   </script>
 </html>

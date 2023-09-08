@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    #c1 {
+      border: 1px solid #ccc;
+    }
+  </style>
+  <body>
+    <!-- canvas width 和 height 为像素点 -->
+    <canvas id="c1" width="600" height="400"> 当前浏览器不支持 canvas 元素 </canvas>
+  </body>
+  <script type="module">
+    // 获取画布
+    /** @type {HTMLCanvasElement} */
+    const c1 = document.getElementById("c1");
+
+    if (!c1.getContext) {
+      console.log("当前浏览器不支持 canvas 元素");
+    }
+
+    // 获取画笔。2d图像
+    const ctx = c1.getContext("2d");
+
+    async function renderCircle(x, y, r, startAngle, endAngle, counterCloseWise = false) {
+      let _endAngle = startAngle;
+      return new Promise((resolve) => {
+        const timer = setInterval(() => {
+          _endAngle = _endAngle + 0.1;
+          ctx.arc(x, y, r, startAngle, _endAngle);
+          ctx.stroke();
+          startAngle = _endAngle;
+          if (_endAngle > endAngle + 0.1) {
+            clearInterval(timer);
+            resolve(true);
+          }
+        }, 10);
+      });
+    }
+
+    // 画圆 x,y,r,起始弧度，终止弧度，默认顺时针
+    await renderCircle(300, 200, 100, 0, Math.PI * 2, true);
+
+    // 画笔移动到 280 150 的位置上
+    ctx.moveTo(280, 150);
+    await renderCircle(260, 150, 20, 0, Math.PI * 2, true);
+
+    // 画笔移动到 360 150 的位置上
+    ctx.moveTo(360, 150);
+    await renderCircle(340, 150, 20, 0, Math.PI * 2, true);
+
+    // 画笔移动到 350 200 的位置上
+    ctx.moveTo(350, 200);
+    await renderCircle(300, 200, 50, 0, Math.PI);
+
+    ctx.stroke();
+  </script>
+</html>
